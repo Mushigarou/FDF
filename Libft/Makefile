@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 20:08:38 by mfouadi           #+#    #+#              #
-#    Updated: 2023/01/21 02:27:24 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/01/25 06:56:44 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC = 	ft_isalnum.c	ft_isascii.c	ft_isprint.c	ft_strlcpy.c	\
 		ft_putstr_fd.c	ft_putendl_fd.c	ft_putnbr_fd.c  ft_split.c		\
 		ft_calloc.c 	ft_memcpy.c		ft_lstnew.c		ft_lstadd_front.c \
 		ft_lstsize.c	ft_lstlast.c	ft_lstiter.c	ft_lstdelone.c	\
-		ft_lstclear.c	ft_lstmap.c	 ft_lstadd_back.c
+		ft_lstclear.c	ft_lstmap.c	 	ft_lstadd_back.c get_next_line.c \
+		get_next_line_utils.c
 
 #----------------------------------------------------------------------------------------------
 # Adding the object directory path as a prefix to the source files
@@ -37,7 +38,7 @@ NAME = libft.a
 
 CFLAGS = -Werror -Wextra -Wall
 
-HEADER = libft.h
+HEADERS = libft.h get_next_line.h
 
 OBJ_DIR = obj
 
@@ -92,19 +93,18 @@ NC ='\033[0m'
 #		- it's also possible to pipe the output to the cat command, so the cursor doesn't go to the next line
 
 all : $(NAME)
-	@ tput cvvis
 
 $(NAME) : $(OBJ_DIR) $(OBJECTS)
 	tput el
 	ar rcs $(NAME) $(OBJECTS)
-	printf "♠"${HBLU}" [%+32s] \n"${NC} "Libft is ready to be linked"
+	printf "♠"${HWHT}" Libft     ▻"${HBLU}" [%-20s] \n"${NC} "ready to be linked"
 
-$(OBJ_DIR)/%.o : %.c $(HEADER)
+$(OBJ_DIR)/%.o : %.c $(HEADERS)
 	$(eval FILES_COMPILED = $(shell echo "$(FILES_COMPILED) + 1" | bc ))
 	@ printf ${HWHT}"  Compiling ▻"${HBLU}" [%-20s] "${HWHT} $(notdir $@)
 	@ echo "$(FILES_COMPILED) * 100 / $(TOTAL_FILES)" | bc | tr -d '\n'
 	@ printf "%% \r"${NC}
-	@ $(CC) $(CFLAGS) -c $< -o $@ || stty -echo
+	@ $(CC) $(CFLAGS)  -c $< -I Libft -o $@
 
 $(OBJ_DIR) :
 	@ mkdir obj

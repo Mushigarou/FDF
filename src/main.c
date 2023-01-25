@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/25 01:37:59 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/25 07:48:11 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,23 @@
 
 #include "../include/fdf.h"
 
-int	main()
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
+// Allocating for struct
 
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, width, height, "WIREFRAME");		
-	draw_line(mlx_ptr, win_ptr);
-	mlx_loop(mlx_ptr);
+int	main(int argc, char **argv)
+{
+	t_data	*data;
+
+	if (argc != 2)
+		return (-1);
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		return (-1);
+	// Initialize variables of the list init_struct(**data)
+	// get_map();
+	data->mlx_ptr = mlx_init();
+	// give argv[1] to the title parameter
+	data->win_ptr = mlx_new_window(data->mlx_ptr, win_width, win_height, argv[1]);		
+	draw_line(data->mlx_ptr, data->win_ptr);
+	mlx_loop(data->mlx_ptr);
 	return(0);
 }
