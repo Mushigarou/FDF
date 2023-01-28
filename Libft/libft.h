@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 22:33:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/25 06:58:38 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/28 01:55:58 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+
+char	*get_next_line(int fd);
+char	*ft_strchr_gnl(const char *s, int c);
+char	*ft_strdup_gnl(const char *s1);
+size_t	ft_strlen_gnl(const char *s);
+char	*ft_strcat_gnl(char *s1, char *s2, char *str, size_t len);
+char	*ft_strjoin_gnl(char *s1, char *s2);
 
 #endif // #define LIBFT_H

@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 05:59:30 by mfouadi           #+#    #+#              #
-#    Updated: 2023/01/25 02:15:55 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/01/25 19:40:06 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -Imlx -c
 
-SRC = fdf.c main.c get_map.c
+SRC = fdf.c main.c get_map.c utils.c
 
 OBJ = $(SRC:.c=.o)
 
