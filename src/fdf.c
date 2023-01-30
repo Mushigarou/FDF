@@ -6,12 +6,12 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/25 02:30:23 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/29 19:39:04 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../include/fdf.h"
+#include "fdf.h"
 
 void	draw_line(void *mlx_ptr, void *win_ptr)
 {

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/28 03:14:26 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/30 02:29:11 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,13 @@
 		
 */
 
-#include "../include/fdf.h"
+#include "fdf.h"
 
-// Allocating for struct
-
-// int	main(int argc, char **argv)
-// {
-// 	t_data	*data;
-
-// 	if (argc != 2)
-// 		return (-1);
-// 	data = (t_data *)malloc(sizeof(t_data));
-// 	if (!data)
-// 		return (-1);
-// 	// Initialize variables of the list init_struct(**data)
-// 	// get_map();
-// 	data->mlx_ptr = mlx_init();
-// 	// give argv[1] to the title parameter
-// 	data->win_ptr = mlx_new_window(data->mlx_ptr, win_width, win_height, argv[1]);		
-// 	draw_line(data->mlx_ptr, data->win_ptr);
-// 	mlx_loop(data->mlx_ptr);
-// 	return(0);
-// }
+int	main(int ac, char **av)
+{
+	t_data	data;
+	if (ac != 2)
+		return (perror("An argument is missing <executable> <map_name> "), 1);
+	init(&data, av);	
+	return(0);
+}

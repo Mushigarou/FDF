@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 05:59:30 by mfouadi           #+#    #+#              #
-#    Updated: 2023/01/25 19:40:06 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/01/29 19:46:08 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -Imlx -c
 
-SRC = fdf.c main.c get_map.c utils.c
+SRC = fdf.c main.c get_map.c utils.c init.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -66,12 +66,11 @@ all : $(NAME)
 
 $(NAME) : dir $(OBJ_PATH)
 	make -C Libft
-	@ $(CC) $(OBJ_PATH) $(INCLUDE) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	@ $(CC) $(OBJ_PATH) $(INCLUDE) -lmlx -framework OpenGL -framework AppKit -o $(NAME) -I include
 	@ printf ${HWHT}"♠ Running Executable...  ▻"${HBLU}" [%-20s]\n"${NC} $(notdir $@)
-	./bin/fdf
 
 obj/%.o : src/%.c $(HEADER)
-	@ $(CC) $(CFLAGS) $< -o $@
+	@ $(CC) $(CFLAGS) $< -o $@ -I include
 	@ printf ${HWHT}"♠ Compiled  ▻"${HBLU}" [%-20s]\n"${NC} $(notdir $@)
 
 dir : 
@@ -87,5 +86,5 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : re fclean clean
-.SILENT : clean fclean $(NAME) 
+.PHONY : re fclean clean dir
+.SILENT : clean fclean $(NAME) dir

@@ -2,3 +2,7 @@ fdf
 .DS_Store
 testing
 *.o
+bin
+obj
+a.out
+42fdf
