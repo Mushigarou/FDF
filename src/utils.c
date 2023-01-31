@@ -6,59 +6,58 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:38:24 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/30 02:23:02 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/31 04:01:38 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-
+#define LOW_HEX "0123456789abcdef"
+#define UPP_HEX "0123456789ABCDEF"
 
 /* Incrementing (wc) when (s - 1) is a seperator, and (*s) isn't a seperator */
-
 int	cnt_width(char *s, char c)
 {
 	unsigned int	w_count;
 	int				state;
+	int	i;
 
+	i = 0;
 	state = OUT;
 	w_count = 0;
 	if (!s)
 		return -1;
-	while (*s != '\0')
+	while (s[i] != '\0')
 	{
-		if (*s == c)
+		if (s[i] == c)
 			state = OUT;
-		else if (*s != c && !state)
+		else if (ft_isdigit(s[i]) && s[i] != c && !state)
 		{
 			state = IN;
 			w_count++;
 		}
-		s++;
-	}
-	return (w_count);
-}
-
-int	iscomma(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (!line)
-		return (0);
-	while (line[i] != '\0')
-	{
-		if (line[i] == ',')
-			return(1);
 		i++;
 	}
-	return(0);
+	return (w_count);
 }
 
 void	free_split(char **s)
 {
 	int	i;
 
+	if (!s && !(*s))
+		return ;
+	i = -1;
+	while (s[++i])
+		free(s[i]);
+	free(s);
+}
+
+void free_matrix(t_tile **s)
+{
+	int i;
+
+	if (!s && !(*s))
+		return;
 	i = -1;
 	while (s[++i])
 		free(s[i]);
@@ -75,42 +74,35 @@ int	map_is_empty(char	*s)
 	return (free_split(line), 0);
 }
 
-// int	atoh(char *s)
-// {
-// 	int	i;
-	
-// 	i = 0;
-// 	if (!s)
-// 		return (2);
-// 	while (s[i] != '\0')
-// 	{
-		
-// 	}
-// }
+int is_hexa(char c)
+{
+	int i;
 
-// void	init_struct(t_data *data, char *p)
-// {
-	
-// }
-// void	get_color(char *line, t_data data)
-// {
-// 	while (*line != '\0')
-// 	{
-// 		if (*line == ',')
-// 		{
-// 			while(*line != ' ')
-// 			{
-// 				data->color
-// 			}
-// 		}
-// 		line++;
-// 	}
-// }
+	i = -1;
+	while (++i < 16)
+	{
+		if (LOW_HEX[i] == c || UPP_HEX[i] == c)
+			return (i);
+	}
+	return (-1);
+}
 
-// int main()
-// {
-// 	int **data;
+int ft_strtol(char *str) // str + 2, to skip "0x"
+{
+	int res;
+	int indice;
 
-// 	data = (int **)malloc(sizeof(data));
-	
-// }
+	res = 0;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		indice = is_hexa(*str);
+		if (indice == -1)
+			return (perror("One of the values is not a hexa number"), -1);
+		res = (res * 16) + indice;
+		str++;
+	}
+	return (res);
+}
+

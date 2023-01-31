@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/30 01:25:31 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/31 03:56:59 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,18 @@
 
 typedef	struct s_tile
 {
-	int	z_matrix;
 	int	x;
 	int	y;
+	int	z;
 	int	color;
+	int 	invalid;
 }	t_tile;
 
 typedef	struct s_data
 {
-	int	width;
-	int	height;
-	t_tile **map;
+	int		width;
+	int		height;
+	t_tile	**map_matrix;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	char	*file_name;
@@ -55,11 +56,12 @@ typedef	struct s_line
 	float	y2;
 }	t_line;
 
-int		get_map(t_data *data);
-void	draw_line(void *mlx_ptr, void *win_ptr);
 int		init(t_data *data, char **av);
-int		cnt_width(char *s, char c);
-int		iscomma(char *line);
-int		init(t_data *data, char **av);
+int get_map(t_data *data, char *map_name);
+void draw_line(void *mlx_ptr, void *win_ptr);
+void	free_split(char **s);
+void free_matrix(t_tile **s);
+int cnt_width(char *s, char c);
+int ft_strtol(char *str);
 
 #endif // fdf.h

@@ -4,5 +4,9 @@ testing
 *.o
 bin
 obj
+*/a.out
+*/libft.a
+*/*.h.gch
+*.h.gch
 a.out
 42fdf

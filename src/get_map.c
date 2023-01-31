@@ -6,27 +6,73 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:48 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/30 02:31:24 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/01/31 04:05:29 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// t_tile get_tile(char *s)
-// {
-	
-// 	return ;
-// }
-
-int get_map(t_data *data)
+t_tile get_tile(char *s, int i, int j)
 {
-	(void)data;
-	// char	*line;
+	t_tile	tile;
+	char	**split;
 
-	// while (line = get_next_line(fd))
-	// {
-	// 	// data->map[i][j] = get_tile(line);
-	// 	free(line);
-	// }
+	if (!s)
+		return (tile.invalid = 1, tile);
+	split = NULL;
+	tile.color = 0x00FFFFFF;
+	if (!(strchr((const char *)s, ',')))
+	{
+		tile.z = ft_atoi((const char *)s);
+		tile.x = i;
+		tile.y = j;
+	}
+	else
+	{
+		split = ft_split(s, ',');
+		if (!split[1])
+		{
+			perror("No color is entered");
+			exit(-1);
+		}
+		tile.z = ft_atoi((const char *)split[0]);
+		tile.color = ft_strtol((split[1] + 2));
+		tile.x = i;
+		tile.y = j;
+	}
+	return (tile);
+}
+
+int get_map(t_data *data, char *map_name)
+{
+	char	*line;
+	char	**split;
+	int		j;
+	int		i;
+	int		fd;
+
+	i = 0;
+	j = 0;
+	fd = open(map_name, O_RDONLY);
+	if (fd < 0)
+		return (free_matrix(data->map_matrix), -1);
+	while ((line = get_next_line(fd)))
+	{
+		j = 0;
+		split = ft_split(line, ' ');
+		if(!split)
+			return (perror("Split Failed"), free_matrix(data->map_matrix), -1);
+		while (j < data->width)
+		{
+			data->map_matrix[i][j] = get_tile(split[j], i, j);
+			if (data->map_matrix[i][j].invalid == 1)
+				return (-1);
+			j++;
+		}
+		i++;
+		free(line);
+		free_split(split);
+	}
+	close(fd);
 	return 0;
 }
