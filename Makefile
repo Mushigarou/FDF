@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 05:59:30 by mfouadi           #+#    #+#              #
-#    Updated: 2023/01/29 19:46:08 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/01/31 04:10:05 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ dir :
 
 clean :
 	make clean -C Libft
-	$(RM) $(OBJ) $(LIBFT_OBJ) bin obj
+	$(RM) $(OBJ) $(LIBFT_OBJ) bin obj a.out */a.out
 
 fclean : clean
 	make fclean -C Libft
