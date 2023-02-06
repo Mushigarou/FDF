@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 05:32:27 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/07 00:03:32 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ int	main(int argc, char **argv)
 {
 	t_data	*data;
 
-	data = (struct s_data)malloc(sizeof(t_data));
+	data = (t_data *)malloc(sizeof(t_data));
 	if (argc != 2)
 		return (-1);
-	data->file_name = argv[1];
+	init(data, argv);
 	data->mlx_ptr = mlx_init();
-	data->mlx_ptr = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, data->file_name);
-	// ...
+	data->win_ptr = mlx_new_window(data->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, data->file_name);
+	draw_tile(data);
+	// draw_line(55.0, 54.0, 400.0, 400.0, data);
+	// mlx_key_hook();
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

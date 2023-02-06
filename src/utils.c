@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:38:24 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 05:37:07 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/06 19:47:28 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // ** Hex digits in lowercase and uppercase
 #define LOW_HEX "0123456789abcdef"
 #define UPP_HEX "0123456789ABCDEF"
-// ** 
+
 #define IN 1
 #define OUT 0
 
@@ -115,7 +115,7 @@ int ft_strtol(char *str)
 
 	res = 0;
 	if (!str)
-		return (16777215);
+		return (0x00FFFFFF);
 	while (*str)
 	{
 		index = is_hexa(*str);

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:48 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 05:31:18 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/06 20:01:08 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Getting color and z value for each tile of the map
 **	Default color = white  && default z = 0
 */
-t_tile get_tile(char *s, int i, int j)
+t_tile get_tile(char *s)
 {
 	t_tile	tile;
 	t_data	*data;
@@ -26,21 +26,15 @@ t_tile get_tile(char *s, int i, int j)
 	split = NULL;
 	if (!s)
 		return (tile.invalid = 1, tile);
-	tile.color = 16777215;
+	tile.color = 0x00FFFFFF;
 	if (!(strchr((const char *)s, ',')))
-	{
 		tile.z = ft_atoi((const char *)s);
-		tile.x = i;
-		tile.y = j;
-	}
 	else
 	{
 		split = ft_split(s, ',');
 		if (ft_strncmp(split[1], "0x", 2) == 0)
 			tile.color = ft_strtol((split[1] + 2));
 		tile.z = ft_atoi((const char *)split[0]);
-		tile.x = i;
-		tile.y = j;
 		free_split(split);
 	}
 	return (tile);
@@ -71,7 +65,7 @@ int get_z(t_data *data, char *map_name)
 			return (perror("Split Failed"), free_matrix(data->map_matrix), -1);
 		while (j < data->width)
 		{
-			data->map_matrix[i][j] = get_tile(split[j], i, j);
+			data->map_matrix[i][j] = get_tile(split[j]);
 			if (data->map_matrix[i][j].invalid == 1)
 				return (free_matrix(data->map_matrix), free_split(split), free(data), -1);
 			j++;

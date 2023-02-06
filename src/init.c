@@ -12,21 +12,6 @@
 
 #include "fdf.h"
 
-// ** Initiates drawing unit (how much distance would be between x and x1)
-int	drawing_unit(int w_w, int w_h, int m_w, int m_h)
-{
-	double	win_diagonal;
-	double	map_diagonal;
-	double	draw_unit;
-
-	map_diagonal = m_w * m_w + m_h * m_h;
-	map_diagonal = sqrt(map_diagonal);
-	win_diagonal = w_w * w_w + w_h * w_h;
-	win_diagonal = sqrt(win_diagonal);
-	draw_unit = (win_diagonal / 2) / map_diagonal;
-	return ((int)draw_unit);
-}
-
 // ** Initiates the point from where to start drawing
 // void	start_point(int *x, int *y)
 // {
@@ -41,7 +26,7 @@ int	get_map_dimensions(t_data *data)
 
 	fd = open(data->file_name , O_RDONLY);
 	if (fd < 0)
-		return (perror("Failed to open the file.	init.c"), free_matrix(data->map_matrix), -1);
+		return (perror("Failed to open the file		init.c"), free_matrix(data->map_matrix), free(data), -1);
 	s = get_next_line(fd);
 	if (!s)
 		return (perror("GNL_Failed.	init.c"), close(fd), -1);
@@ -54,7 +39,7 @@ int	get_map_dimensions(t_data *data)
 		free(s);
 		s = get_next_line(fd);
 		if (s && ((cnt_width(s, ' ')) != data->width))
-			return (perror("Error occured (map width is not the same).	init.c"), free(s), free_matrix(data->map_matrix), close(fd), -1);
+			return (perror("Error occured (map width is not the same).	init.c"), free_matrix(data->map_matrix), close(fd), free(s), -1);
 	}
 	close(fd);
 	return 0;
@@ -74,7 +59,7 @@ int	allocate_map(t_data *data)
 	{
 		data->map_matrix[i] = malloc(sizeof(t_tile) * (data->width));
 		if (!data->map_matrix[i])
-			return (perror("Malloc Failed."), free_matrix(data->map_matrix), -1);
+			return (perror("Malloc Failed."), free_matrix(data->map_matrix), free(data), -1);
 		i++;
 	}
 	return (0);
@@ -84,9 +69,10 @@ int	allocate_map(t_data *data)
 ** Initiates struct, map dimensions, allocations, z value, color, start point
 ** of drawing, drawing unit (scale)
 */
-int	init(t_data *data)
+int	init(t_data *data, char **av)
 {
 	ft_bzero(data, sizeof(t_data));
+	data->file_name = av[1];
 	if (get_map_dimensions(data) < 0)
 		exit(-1);
 	if (allocate_map(data) < 0)

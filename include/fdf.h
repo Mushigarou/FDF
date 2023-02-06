@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 05:33:21 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/06 23:20:07 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,15 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <math.h>
-#include "../Libft/libft.h"
+#include "libft.h"
 
 // ** width and height of the window
-#define WIN_WIDTH 1980
-#define WIN_HEIGHT 1080
+#define SCREEN_WIDTH 1980
+#define SCREEN_HEIGHT 1080
 
 // ** Accessing each tile of the map
 typedef	struct s_tile
 {
-	int		x;
-	int		y;
 	int		z;
 	int		color;
 	int		invalid;
@@ -51,14 +49,14 @@ typedef	struct s_data
 // ** Start point of drawing
 typedef	struct s_line
 {
-	double	i;
-	double	j;
-	double	i1;
-	double	i1;
+	double	x;
+	double	y;
+	double	x1;
+	double	y1;
 }	t_line;
 
 // ** Initiates structure
-int		init(t_data *data);
+int		init(t_data *data, char **av);
 // ** Map dimensions
 int		get_z(t_data *data, char *map_name);
 // ** Frees allocated memory
@@ -69,8 +67,10 @@ int		cnt_width(char *s, char c);
 // ** Converts hexadecimal to decimal
 int		ft_strtol(char *str);
 // ** draws a line between two points
-void draw_line(double x, double y, double x1, double y1, t_data *data);
+void	draw_line(double x, double y, double x1, double y1, t_data *data);
+// ** Draws lines between the points of the map
+void	draw_tile(t_data *data);
 // ** Checks whether the map is empty or not
-int map_is_empty(char *s);
+int		map_is_empty(char *s);
 
 #endif // fdf.h
