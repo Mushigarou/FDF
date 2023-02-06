@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 00:18:30 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/06 05:33:21 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 #include <math.h>
 #include "../Libft/libft.h"
 
-#define IN 1
-#define OUT 0
+// ** width and height of the window
 #define WIN_WIDTH 1980
 #define WIN_HEIGHT 1080
 
+// ** Accessing each tile of the map
 typedef	struct s_tile
 {
 	int		x;
@@ -37,6 +37,7 @@ typedef	struct s_tile
 	int		invalid;
 }	t_tile;
 
+// ** Accessing different type of data in a single place
 typedef	struct s_data
 {
 	t_tile	**map_matrix;
@@ -47,20 +48,29 @@ typedef	struct s_data
 	int		height;
 }	t_data;
 
+// ** Start point of drawing
 typedef	struct s_line
 {
-	double	x1;
-	double	y1;
-	double	x2;
-	double	y2;
+	double	i;
+	double	j;
+	double	i1;
+	double	i1;
 }	t_line;
 
-int		init(t_data *data, char **av);
-int		get_map(t_data *data, char *map_name);
+// ** Initiates structure
+int		init(t_data *data);
+// ** Map dimensions
+int		get_z(t_data *data, char *map_name);
+// ** Frees allocated memory
 void	free_split(char **s);
 void	free_matrix(t_tile **s);
+// ** Counts width of the given map
 int		cnt_width(char *s, char c);
+// ** Converts hexadecimal to decimal
 int		ft_strtol(char *str);
+// ** draws a line between two points
 void draw_line(double x, double y, double x1, double y1, t_data *data);
+// ** Checks whether the map is empty or not
+int map_is_empty(char *s);
 
 #endif // fdf.h

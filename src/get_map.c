@@ -6,12 +6,16 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:48 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/05 03:18:51 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/06 05:31:18 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/*
+** Getting color and z value for each tile of the map
+**	Default color = white  && default z = 0
+*/
 t_tile get_tile(char *s, int i, int j)
 {
 	t_tile	tile;
@@ -19,9 +23,9 @@ t_tile get_tile(char *s, int i, int j)
 	char	**split;
 
 	data = NULL;
+	split = NULL;
 	if (!s)
 		return (tile.invalid = 1, tile);
-	split = NULL;
 	tile.color = 16777215;
 	if (!(strchr((const char *)s, ',')))
 	{
@@ -31,25 +35,22 @@ t_tile get_tile(char *s, int i, int j)
 	}
 	else
 	{
-		// should rewrite this, so when there is no color, black would be the default
-		// and z = 0
 		split = ft_split(s, ',');
-		if (!split[1])
-		{
-			perror("No color is entered");
-			free_matrix(data->map_matrix);
-			free(s);
-			exit(-1);
-		}
+		if (ft_strncmp(split[1], "0x", 2) == 0)
+			tile.color = ft_strtol((split[1] + 2));
 		tile.z = ft_atoi((const char *)split[0]);
-		tile.color = ft_strtol((split[1] + 2));
 		tile.x = i;
 		tile.y = j;
+		free_split(split);
 	}
 	return (tile);
 }
 
-int get_map(t_data *data, char *map_name)
+/*
+** Openning the map file, then iterating on each line until the end of the map
+** Each line is passed to get_tile()
+*/
+int get_z(t_data *data, char *map_name)
 {
 	char	*line;
 	char	**split;
@@ -71,8 +72,8 @@ int get_map(t_data *data, char *map_name)
 		while (j < data->width)
 		{
 			data->map_matrix[i][j] = get_tile(split[j], i, j);
-			// if (data->map_matrix[i][j].invalid == 1)
-			// 	return (-1);
+			if (data->map_matrix[i][j].invalid == 1)
+				return (free_matrix(data->map_matrix), free_split(split), free(data), -1);
 			j++;
 		}
 		i++;
