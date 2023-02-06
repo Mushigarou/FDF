@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 00:52:28 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/06 00:53:57 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, argv[1]);
 	draw_line(55.0, 55.0, 100.0, 300.0, data);
 	draw_line(100.0, 300.0, 500.0, 400.0, data);
-	// draw_line(500.0, 400.0, 55.0, 55.0, data);
+	draw_line(500.0, 400.0, 55.0, 55.0, data);
 	// printf("wa rani wsselt hna");
 	mlx_loop(data->mlx_ptr);
 	return(0);
