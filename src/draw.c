@@ -6,14 +6,14 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/07 04:02:04 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/07 05:40:04 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "fdf.h"
 int drawing_unit(int w_w, int w_h, int m_w, int m_h);
-void iso(float *x, float *y, float *z);
+void iso(float *x, float *y, float z);
 
 // ** Draws all the tiles of the map
 void draw_tile(t_data *data)
@@ -38,47 +38,49 @@ void draw_tile(t_data *data)
 }
 
 // ** Draws a line between point A and B
-void draw_line(double x, double y, double x1, double y1, t_data *data)
+void draw_line(float x, float y, float x1, float y1, t_data *data)
 {
-	double	x_step;
-	double	y_step;
-	int	max;
+	float	x_step;
+	float	y_step;
 	int	scale;
-int i = x;
-int j = y;
+	int i = (int)x;
+	int j = (int)y;
+	// float z = data->map_matrix[(int)y][(int)x].z;
+	// float z1 = data->map_matrix[(int)y1][(int)x1].z;
 	// tile = malloc (sizeof(t_tile));
 	// if (!tile)
 	// return NULL;
 scale = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
-printf("%d", scale);
+// printf("%d", scale);
 
-/***  ****/
-	// iso(x, y, z)
+
 /***** Elarging distance between points ******/
 	x *= scale;
 	y *= scale;
 	x1 *= scale;
 	y1 *= scale;
 
+/*** Isometric view ****/
+	// iso(&x, &y, z);
+	// iso(&x, &y, z1);
+	// printf("\n%f\n", z1);
+
 	x_step = x1 - x;
 	y_step = y1 - y;
-	max = fmax(fabs(x_step), fabs(y_step));
-	x_step /= max;
-	y_step /= max;
+	x_step /= fmax(fabs(x_step), fabs(y_step));
+	y_step /= fmax(fabs(x_step), fabs(y_step));
 
-/***** translates x and y *****/
+	/***** translates x and y *****/
 	x += SCREEN_WIDTH / 4;
 	y += SCREEN_HEIGHT / 5;
 	x1 += SCREEN_WIDTH / 4;
 	y1 += SCREEN_HEIGHT / 5;
 
-/***** COLOR *******/
-
-	printf(";;;;%d;;;\n\n", data->map_matrix[i][j].color);
+	printf("color=%d | i=%d | j=%d | z=%d\n", data->map_matrix[j][i].color, j, i, data->map_matrix[i][j].z);
 
 	while ((int)x != (int)x1 || (int)y != (int)y1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, (int)x, (int)y, data->map_matrix[i][j].color);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, (int)x, (int)y, data->map_matrix[j][i].color);
 		x += x_step;
 		y += y_step;
 	}
@@ -91,9 +93,9 @@ printf("%d", scale);
 */
 int drawing_unit(int s_w, int s_h, int m_w, int m_h)
 {
-	double screen_diagonal;
-	double map_diagonal;
-	double draw_unit;
+	float screen_diagonal;
+	float map_diagonal;
+	float draw_unit;
 
 	map_diagonal = m_w * m_w + m_h * m_h;
 	map_diagonal = sqrt(map_diagonal);
@@ -103,7 +105,7 @@ int drawing_unit(int s_w, int s_h, int m_w, int m_h)
 	return ((int)draw_unit);
 }
 
-void	iso(float *x, float *y, float *z)
+void	iso(float *x, float *y, float z)
 {
 	// This equation maps the x and y values to a new x value
 	/*  
@@ -120,5 +122,5 @@ void	iso(float *x, float *y, float *z)
 	** The '- *z' term maps the z height to the y axis, giving the illusion of a 3D view
 	** The '-' sign is used to invert the height, so that positive z values are mapped to lower y values and negative z values are mapped to higher y values.
 	*/
-	*y = (*x + *y) * sin(0.8) - *z;
+	*y = (*x + *y) * sin(0.8) - z;
 }

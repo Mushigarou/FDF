@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/07 03:44:37 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/07 05:05:49 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		cnt_width(char *s, char c);
 // ** Converts hexadecimal to decimal
 int		ft_strtol(char *str);
 // ** draws a line between two points
-void	draw_line(double x, double y, double x1, double y1, t_data *data);
+void	draw_line(float x, float y, float x1, float y1, t_data *data);
 // ** Draws lines between the points of the map
 void	draw_tile(t_data *data);
 // ** Checks whether the map is empty or not
