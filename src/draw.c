@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/07 05:40:04 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/08 00:09:56 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ scale = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
 	x1 += SCREEN_WIDTH / 4;
 	y1 += SCREEN_HEIGHT / 5;
 
-	printf("color=%d | i=%d | j=%d | z=%d\n", data->map_matrix[j][i].color, j, i, data->map_matrix[i][j].z);
+	// printf("color=%d | i=%d | j=%d | z=%d\n", data->map_matrix[j][i].color, j, i, data->map_matrix[i][j].z);
 
 	while ((int)x != (int)x1 || (int)y != (int)y1)
 	{
