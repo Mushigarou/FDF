@@ -6,30 +6,31 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/07 00:14:29 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/07 04:02:04 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "fdf.h"
 int drawing_unit(int w_w, int w_h, int m_w, int m_h);
+void iso(float *x, float *y, float *z);
 
 // ** Draws all the tiles of the map
-void	draw_tile(t_data *data)
+void draw_tile(t_data *data)
 {
 	int	x;
 	int	y;
-	int s = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
-	printf("scale = %d\n", s);
-
+	
 	y = 0; // Later, can give x,y st.point to start draw the map centered
 	while (y < data->height)
 	{
 		x = 0;
 		while (x < data->width)
 		{
-			draw_line(x, y, x+1, y, data);
-			draw_line(x, y, x, y+1, data);
+			if (x < data->width - 1)
+				draw_line(x, y, x+1, y, data);
+			if (y < data->height - 1)
+				draw_line(x, y, x, y + 1, data);
 			x++;
 		}
 		y++;
@@ -38,21 +39,27 @@ void	draw_tile(t_data *data)
 
 // ** Draws a line between point A and B
 void draw_line(double x, double y, double x1, double y1, t_data *data)
-{ 
+{
 	double	x_step;
 	double	y_step;
 	int	max;
 	int	scale;
-
+int i = x;
+int j = y;
+	// tile = malloc (sizeof(t_tile));
+	// if (!tile)
+	// return NULL;
 scale = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
 printf("%d", scale);
 
-/***** zoom ******/
+/***  ****/
+	// iso(x, y, z)
+/***** Elarging distance between points ******/
 	x *= scale;
 	y *= scale;
 	x1 *= scale;
 	y1 *= scale;
-	
+
 	x_step = x1 - x;
 	y_step = y1 - y;
 	max = fmax(fabs(x_step), fabs(y_step));
@@ -65,16 +72,23 @@ printf("%d", scale);
 	x1 += SCREEN_WIDTH / 4;
 	y1 += SCREEN_HEIGHT / 5;
 
-	while ((int)x != (int)x1)
+/***** COLOR *******/
+
+	printf(";;;;%d;;;\n\n", data->map_matrix[i][j].color);
+
+	while ((int)x != (int)x1 || (int)y != (int)y1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, (int)x, (int)y, 0x00FFFFFF);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, (int)x, (int)y, data->map_matrix[i][j].color);
 		x += x_step;
 		y += y_step;
 	}
 	return ;
 }
 
-// ** Initiates drawing unit (how much distance would be between x and x1)
+/*
+** Initiates drawing unit (how much distance would be between x and x1)
+** drawing unit = (Win_diagonal / 2) / map diagonal
+*/
 int drawing_unit(int s_w, int s_h, int m_w, int m_h)
 {
 	double screen_diagonal;
@@ -87,4 +101,24 @@ int drawing_unit(int s_w, int s_h, int m_w, int m_h)
 	screen_diagonal = sqrt(screen_diagonal);
 	draw_unit = (screen_diagonal / 2) / map_diagonal;
 	return ((int)draw_unit);
+}
+
+void	iso(float *x, float *y, float *z)
+{
+	// This equation maps the x and y values to a new x value
+	/*  
+	**	The cos(0.8) term is the cosine of the angle of the isometric projection
+	**	isometric projections are typically done with an angle around 30 degrees
+	*/
+	//  (*x - *y) horizontal difference between x and y,
+	*x = (*x - *y) * cos(0.8);
+
+	// This equation maps the x, y, and z values to a new y value.
+	// The sin(0.8) term is the sine of the angle of the isometric projection
+	// The *x + *y term calculates the horizontal sum of x and y, then scaled by the sine of the angle
+	/*
+	** The '- *z' term maps the z height to the y axis, giving the illusion of a 3D view
+	** The '-' sign is used to invert the height, so that positive z values are mapped to lower y values and negative z values are mapped to higher y values.
+	*/
+	*y = (*x + *y) * sin(0.8) - *z;
 }

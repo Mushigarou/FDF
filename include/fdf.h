@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 23:20:07 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/07 03:44:37 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ typedef	struct s_data
 	int		height;
 }	t_data;
 
-// ** Start point of drawing
-typedef	struct s_line
-{
-	double	x;
-	double	y;
-	double	x1;
-	double	y1;
-}	t_line;
+// // ** Start point of drawing
+// typedef	struct s_line
+// {
+// 	double	x;
+// 	double	y;
+// 	double	x1;
+// 	double	y1;
+// }	t_line;
 
 // ** Initiates structure
 int		init(t_data *data, char **av);
