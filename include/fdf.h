@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/07 05:05:49 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/08 05:53:45 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 typedef	struct s_tile
 {
 	int		z;
+	int		z1;
 	int		color;
 	int		invalid;
 }	t_tile;

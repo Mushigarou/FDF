@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 05:59:30 by mfouadi           #+#    #+#              #
-#    Updated: 2023/02/06 22:48:36 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/02/09 06:18:53 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,10 @@ RM = rm -rf
 
 LIBFT_OBJ = Libft/obj
 
+TOTAL_FILES = $(shell echo `cd src && ls *.c | wc -l`)
+
+FILES_COMPILED = 0
+
 #----------------------------------------------------------------------------------------------
 # Colors ANSI Terminal
 #----------------------------------------------------------------------------------------------
@@ -64,16 +68,21 @@ NC ='\033[0m'
 # AppKit provides a set of tools and interfaces for creating graphical user
 # 	interfaces, handling events, managing windows and views, and other common tasks
 
-all : $(NAME)
+all :art libft_archive $(NAME) fdf
 
 $(NAME) : dir $(OBJ_PATH)
-	make -C Libft
 	@ $(CC) $(OBJ_PATH) $(ARCHIVE) -lmlx -framework OpenGL -framework AppKit -o $(NAME) -I include
-	@ printf ${HWHT}"♠ Running Executable...  ▻"${HBLU}" [%-20s]\n"${NC} $(notdir $@)
+# @ printf ${HYEL}"♠"${HWHT}" Executable...  ▻"${HYEL}" [%-20s]\n\n"${NC} $(notdir $@)
+
+libft_archive :
+	@ make -C Libft
 
 obj/%.o : src/%.c $(HEADER)
 	@ $(CC) $(CFLAGS) $< -o $@ ${INCLUDE}
-	@ printf ${HWHT}"♠ Compiled  ▻"${HBLU}" [%-20s]\n"${NC} $(notdir $@)
+# $(eval FILES_COMPILED = $(shell echo "$(FILES_COMPILED) + 1" | bc))
+# @ printf ${HYEL}"♠"${HWHT}" Compiled  ▻"${HYEL}" [%-20s]"${HWHT} $(notdir $@)
+# @ echo "$(FILES_COMPILED) * 100 / ${TOTAL_FILES}" | bc | tr -d '\n'
+# @ printf "%% \r"${NC}
 
 dir : 
 	mkdir -p bin obj
@@ -88,5 +97,52 @@ fclean : clean
 
 re : fclean all
 
+#----------------------------------------------------------------------------------------------
+# Decoration
+#----------------------------------------------------------------------------------------------
+
+art:
+	@printf ${HWHT}"\n           /\\ .-\"\"\"-. /\\ \n"
+	@printf "           \\ \`\"\`'v'\`\"\` / \n"
+	@printf "           { .=.   .=. } \n"
+	@printf "           {( "${HYEL}"O"${NC}${HWHT}" ) ( "${HYEL}"O"${NC}${HWHT}" )} \n"
+	@printf "            .\\'=' V '='/. 		    *******************\\n"
+	@printf "          /.'\`-'-'-'-\`'.\\ **************** | Hang Tight! Amigo |\n"
+	@printf "         |/   ^  ~  ^   \\| 		    *******************\\n"
+	@printf "         \\|    ^   ^    |/ \n"
+	@printf "          \\\\\\           // \n"
+	@printf "           \\\\\\ _     _ // \n"
+	@printf "      "${HYEL}" -----"${HWHT}"'(|)"${HYEL}"---"${HWHT}"(|)'"${HYEL}"----- \n"
+	@printf "       ------"${HWHT}","${HYEL}"-------"${HWHT}","${HYEL}"------ \n"${HWHT}
+	@printf "            / .' : '. \\ \n"
+	@printf "           '-'._.-._.'-' \n\n"
+	@printf ${NC}
+
+fdf :
+	@printf ${HYEL}"          _____                    _____                    _____\n"
+	@printf "         /\    \                  /\    \                  /\    \ \n"
+	@printf "        /::\    \                /::\    \                /::\    \ \n"
+	@printf "       /::::\    \              /::::\    \              /::::\    \ \n"
+	@printf "      /::::::\    \            /::::::\    \            /::::::\    \ \n"
+	@printf "     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \ \n"
+	@printf "    /:::/__\:::\    \        /:::/  \:::\    \        /:::/__\:::\    \ \n"
+	@printf "   /::::\   \:::\    \      /:::/    \:::\    \      /::::\   \:::\    \ \n"
+	@printf "  /::::::\   \:::\    \    /:::/    / \:::\    \    /::::::\   \:::\    \ \n"
+	@printf " /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\  /:::/\:::\   \:::\    \ \n"
+	@printf "/:::/  \:::\   \:::\____\/:::/____/     \:::|    |/:::/  \:::\   \:::\____\ \n"
+	@printf "\::/    \:::\   \::/    /\:::\    \     /:::|____|\::/    \:::\   \::/    / \n"
+	@printf " \/____/ \:::\   \/____/  \:::\    \   /:::/    /  \/____/ \:::\   \/____/ \n"
+	@printf "          \:::\    \       \:::\    \ /:::/    /            \:::\    \ \n"
+	@printf "           \:::\____\       \:::\    /:::/    /              \:::\____\ \n"
+	@printf "            \::/    /        \:::\  /:::/    /                \::/    / \n"
+	@printf "             \/____/          \:::\/:::/    /                  \/____/ \n"
+	@printf "                               \::::::/    /                                \n"
+	@printf "                                \::::/    /                                 \n"
+	@printf "                                 \::/____/                                  \n"
+	@printf "                                  ~~                            \n"${NC}
+#----------------------------------------------------------------------------------------------
+# Built-in Targets
+#----------------------------------------------------------------------------------------------
 .PHONY : re fclean clean dir
 .SILENT : clean fclean $(NAME) dir
+.DEFAULT_GOAL : all

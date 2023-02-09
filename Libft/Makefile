@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 20:08:38 by mfouadi           #+#    #+#              #
-#    Updated: 2023/01/25 06:56:44 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/02/09 02:00:55 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,11 +97,10 @@ all : $(NAME)
 $(NAME) : $(OBJ_DIR) $(OBJECTS)
 	tput el
 	ar rcs $(NAME) $(OBJECTS)
-	printf "♠"${HWHT}" Libft     ▻"${HBLU}" [%-20s] \n"${NC} "ready to be linked"
 
 $(OBJ_DIR)/%.o : %.c $(HEADERS)
 	$(eval FILES_COMPILED = $(shell echo "$(FILES_COMPILED) + 1" | bc ))
-	@ printf ${HWHT}"  Compiling ▻"${HBLU}" [%-20s] "${HWHT} $(notdir $@)
+	@ printf ${HWHT}"  Compiling ▻"${HYEL}" [%-20s] "${HWHT} $(notdir $@)
 	@ echo "$(FILES_COMPILED) * 100 / $(TOTAL_FILES)" | bc | tr -d '\n'
 	@ printf "%% \r"${NC}
 	@ $(CC) $(CFLAGS)  -c $< -I Libft -o $@
