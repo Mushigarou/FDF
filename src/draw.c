@@ -6,13 +6,13 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/09 22:37:04 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/10 03:59:23 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 int drawing_unit(int w_w, int w_h, int m_w, int m_h);
-void iso(float *x, float *y, t_tile *tile);
+void iso(float *x, float *y, int z);
 void scale_map(float *x, float *y, float *x1, float *y1, t_data *data);
 
 // ** Draws all the tiles of the map
@@ -48,13 +48,17 @@ void draw_line(float x, float y, float x1, float y1, t_data *data)
 	int j;
 	i = (int)x;
 	j = (int)y;
-
+	int z =  data->map_matrix[(int)y][(int)x].z;
+	int z1 = data->map_matrix[(int)y1][(int)x1].z;
+	 /*** Isometric view ****/
+	// printf("y=%d | x=%d | y1=%d | x1=%d\n", (int)y, (int)x, (int)y1, (int)x1);
+	iso(&x1, &y1, z1);
+	iso(&x, &y, z);
 	scale_map(&x, &y, &x1, &y1, data);
-	/*** Isometric view ****/
-	printf("y=%d | x=%d | y1=%d | x1=%d\n", (int)y, (int)x, (int)y1, (int)x1);
-	iso(&x, &y, &data->map_matrix[(int)y][(int)x]);
-	iso(&x1, &y1, &data->map_matrix[(int)y1][(int)x1]);
-
+	x += SCREEN_WIDTH / 2;
+	y += SCREEN_HEIGHT / 10;
+	x1 += SCREEN_WIDTH / 2;
+	y1 += SCREEN_HEIGHT / 10;
 	x_step = x1 - x;
 	y_step = y1 - y;
 	max = fmax(fabs(x_step), fabs(y_step));
@@ -62,10 +66,6 @@ void draw_line(float x, float y, float x1, float y1, t_data *data)
 	y_step /= fmax(fabs(x_step), fabs(y_step));
 
 	/***** translates x and y *****/
-	x += SCREEN_WIDTH / 2.5;
-	y += SCREEN_HEIGHT / 2;
-	x1 += SCREEN_WIDTH / 2.5;
-	y1 += SCREEN_HEIGHT / 2;
 	
 	int	k = -1;
 	while (k++ < max)
@@ -95,7 +95,7 @@ int drawing_unit(int s_w, int s_h, int m_w, int m_h)
 	return ((int)draw_unit);
 }
 
-void iso(float *x, float *y, t_tile *tile)
+void iso(float *x, float *y, int z)
 {
 	// This equation maps the x and y values to a new x value
 	/*
@@ -103,7 +103,8 @@ void iso(float *x, float *y, t_tile *tile)
 	**	isometric projections are typically done with an angle around 30 degrees
 	*/
 	//  (*x - *y) horizontal difference between x and y,
-	*x = (*x - *y) * cos(0.8);
+	*x = (*x - *y) * cosf(1.0890009);
+	*y = (*x + *y) * sinf(1.5) - (z / 3);
 
 	// This equation maps the x, y, and z values to a new y value.
 	// The sin(0.8) term is the sine of the angle of the isometric projection
@@ -112,8 +113,7 @@ void iso(float *x, float *y, t_tile *tile)
 	** The '- *z' term maps the z height to the y axis, giving the illusion of a 3D view
 	** The '-' sign is used to invert the height, so that positive z values are mapped to lower y values and negative z values are mapped to higher y values.
 	*/
-	*y = (*x + *y) * sin(0.8) - tile->z;
-	printf("z = %d\n", tile->z);
+	// printf("z = %d\n", tile->z);
 }
 
 void scale_map(float *x, float *y, float *x1, float *y1, t_data *data)
@@ -122,8 +122,9 @@ void scale_map(float *x, float *y, float *x1, float *y1, t_data *data)
 
 	sc = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
 	/***** Elarging distance between points ******/
-	*x *= sc;
-	*y *= sc;
-	*x1 *= sc;
-	*y1 *= sc;
+	*x *= sc * 2.5;
+	*y *= sc * 2.5;
+	*x1 *= sc * 2.5;
+	*y1 *= sc * 2.5;
+	// pri÷ntf("%d", 1);
 }

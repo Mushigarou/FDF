@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/08 05:53:45 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/09 23:13:39 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 #include "libft.h"
 
 // ** width and height of the window
-#define SCREEN_WIDTH 1980
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1500
+#define SCREEN_HEIGHT 960
 
 // ** Accessing each tile of the map
 typedef	struct s_tile
