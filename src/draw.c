@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/10 03:59:23 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/10 04:01:57 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,9 @@ void scale_map(float *x, float *y, float *x1, float *y1, t_data *data)
 
 	sc = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
 	/***** Elarging distance between points ******/
-	*x *= sc * 2.5;
-	*y *= sc * 2.5;
-	*x1 *= sc * 2.5;
-	*y1 *= sc * 2.5;
+	*x *= sc * 1.5;
+	*y *= sc * 1.5;
+	*x1 *= sc * 1.5;
+	*y1 *= sc * 1.5;
 	// pri÷ntf("%d", 1);
 }
