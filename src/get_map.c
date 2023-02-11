@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:48 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/09 22:41:57 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/11 06:12:50 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ t_tile get_tile(char *s)
 		return (tile.invalid = 1, tile);
 	tile.color = 0x00FFFFFF;
 	if (!(strchr((const char *)s, ',')))
-		tile.z = ft_atoi((const char *)s);
+			{
+				
+				tile.z = ft_atoi((const char *)s);
+				if (tile.z != 0)
+					tile.color = 0x00FFFF00;
+			}
 	else
 	{
 		split = ft_split(s, ',');

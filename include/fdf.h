@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/09 23:13:39 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/11 02:29:05 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef	struct s_data
 	void	*win_ptr;
 	int		width;
 	int		height;
+	int		shift_x;
+	int		shift_y;
 }	t_data;
 
 // // ** Start point of drawing

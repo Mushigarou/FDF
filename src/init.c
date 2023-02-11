@@ -71,7 +71,7 @@ int	allocate_map(t_data *data)
 */
 int	init(t_data *data, char **av)
 {
-	ft_bzero(data, sizeof(t_data));
+	ft_memset(data, 0, sizeof(t_data));
 	data->file_name = av[1];
 	if (get_map_dimensions(data) < 0)
 		exit(-1);
