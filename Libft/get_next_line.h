@@ -6,10 +6,9 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 00:41:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/28 01:43:31 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:26:20 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/12 03:51:09 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:18:16 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,19 @@
 **	Calling mlx_new_win() to open a window
 **	
 */
-int mouse(t_data *data)
+int	mouse(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	exit(0);
 }
+
 int	deal_key(int key, t_data *data)
 {
-	// printf("%d\n", key);
 	if (key == 53)
-		{mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		exit(0);}
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		exit(0);
+	}
 	if (key == 126)
 		data->shift_y -= 20;
 	if (key == 123)
@@ -50,8 +52,14 @@ int	deal_key(int key, t_data *data)
 		data->bool = 0;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw_tile(data);
-	return 0;
+	return (0);
 }
+
+void	lk(void)
+{
+	system("leaks fdf");
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -61,12 +69,13 @@ int	main(int argc, char **argv)
 		return (-1);
 	init(data, argv);
 	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, data->file_name);
+	data->win_ptr = mlx_new_window(data->mlx_ptr,
+			SCREEN_WIDTH, SCREEN_HEIGHT, data->file_name);
 	draw_tile(data);
-	// draw_line(55.0, 54.0, 400.0, 400.0, data);
-	// mlx_key_hook(data->win_ptr, deal_key, data);
+	printf("%d\n", data->width);
 	mlx_hook(data->win_ptr, 2, 1L << 0, deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, mouse, data);
+	lk();
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

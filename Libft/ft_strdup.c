@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 00:16:47 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/19 07:29:16 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:25:02 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*ft_strdup(const char *s1)
 {
 	char	*ptr1;
 	size_t	s1_len;
+
 	s1_len = ft_strlen(s1);
 	ptr1 = (char *)malloc(s1_len + NULL_CHAR);
 	if (ptr1 == (void *)0)

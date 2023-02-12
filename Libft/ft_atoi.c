@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 22:25:31 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/31 03:30:28 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:29:51 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	ft_atoi(const char *str)
 
 	sign = 1;
 	res = 0;
-	if (!str)
-		return (0);
 	str = ft_spaces((char *)str);
 	if (*str == '-')
 	{

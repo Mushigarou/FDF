@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:38:24 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/06 19:47:28 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:20:56 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,6 @@
 // ** Hex digits in lowercase and uppercase
 #define LOW_HEX "0123456789abcdef"
 #define UPP_HEX "0123456789ABCDEF"
-
-#define IN 1
-#define OUT 0
-
-/* 
-** Counts line width based on a seperator
-** Incrementing (wc) when (s - 1) is a seperator, and (*s) isn't a seperator 
-*/
-int	cnt_width(char *s, char c)
-{
-	unsigned int	w_count;
-	int				state;
-	int	i;
-
-	i = 0;
-	state = OUT;
-	w_count = 0;
-	if (!s)
-		return -1;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c)
-			state = OUT;
-		else if (ft_isdigit(s[i]) && s[i] != c && !state)
-		{
-			state = IN;
-			w_count++;
-		}
-		i++;
-	}
-	return (w_count);
-}
 
 // Frees the char **
 void	free_split(char **s)
@@ -62,12 +30,12 @@ void	free_split(char **s)
 }
 
 // Frees the t_tile **
-void free_matrix(t_tile **s)
+void	free_matrix(t_tile **s)
 {
-	int i;
+	int	i;
 
 	if (!s)
-		return;
+		return ;
 	i = -1;
 	while (s[++i])
 		free(s[i]);
@@ -86,12 +54,11 @@ int	map_is_empty(char *s)
 }
 
 //** Returns the corresponding decimal value of the given hexa character
-int is_hexa(char c)
+int	is_hexa(char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	if (c == '\0')
 		return (-1);
 	while (i < 16)
@@ -108,10 +75,10 @@ int is_hexa(char c)
 ** Creating a place for the next digit by mulptiplying by 16, then adding
 ** the index that corresponds to the correct decimal value digit
 */
-int ft_strtol(char *str)
+int	ft_strtol(char *str)
 {
-	int res;
-	int index;
+	int	res;
+	int	index;
 
 	res = 0;
 	if (!str)

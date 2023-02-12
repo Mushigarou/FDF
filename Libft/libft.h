@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 22:33:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/28 01:55:58 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:26:26 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # ifndef NULL_CHAR
 #  define  NULL_CHAR 1
 # endif // #define NULL_CHAR
-
-
 
 typedef struct s_list
 {

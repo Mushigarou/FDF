@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 22:36:36 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/01/20 23:51:49 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/12 20:25:16 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-
 	size_t	i;
 	size_t	len_src;
 	size_t	len_dst;
