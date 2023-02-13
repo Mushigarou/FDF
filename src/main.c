@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/13 04:00:55 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/13 06:16:30 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ int	deal_key(int key, t_data *data)
 	return (0);
 }
 
-void	lk(void)
-{
-	system("leaks fdf");
-}
-
 // Minilibx doesn't support event masks
 // 2 is the event of keypress
 // 17 is the event of DestroyNotify
@@ -83,7 +78,6 @@ int	main(int argc, char **argv)
 		"Use direction keys to move the map");
 	mlx_hook(data->win_ptr, 2, 0, deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, mouse, data);
-	lk();
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/13 06:12:26 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/13 06:17:19 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	iso(float *x, float *y, int z, t_data *data)
 			z /= 3;
 		if (data->width == 21)
 			z /= 12;
-		if (data->width >= 100 && data->width < 500)
+		if (data->width >= 100)
 			z /= 3;
 		*x = (*x - *y) * cos(1.0890009);
 		*y = (*x + *y) - z;
@@ -114,19 +114,9 @@ void	scale_map(t_pt *pt, float *x1, float *y1, t_data *data)
 
 	sc = (float)drawing_unit(sc, data->width, data->height);
 	if (data->zoom_in != 0)
-	{
-		printf("bf : sc = %f\n", sc);
 		sc += 1;
-		printf("bf : zoom = %d\n", data->zoom_in);
-		printf("Af : sc = %f\n", sc);
-	}
 	if (data->zoom_out != 0 && sc > 2)
-	{
-		printf("bf : sc = %f\n", sc);
 		sc -= 1;
-		printf("bf : zoom = %d\n", data->zoom_in);
-		printf("Af : sc = %f\n", sc);
-	}
 	pt->x *= sc;
 	pt->y *= sc;
 	*x1 *= sc;
