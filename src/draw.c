@@ -6,19 +6,19 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 01:57:09 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/12 20:31:53 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/13 04:08:20 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		drawing_unit(int w_w, int w_h, int m_w, int m_h);
+float	drawing_unit(int sc, int m_w, int m_h);
 void	iso(float *x, float *y, int z, t_data *data);
 void	scale_map(t_pt *pt, float *x1, float *y1, t_data *data);
 
 // ** Draws all the tiles of the map
 
-void	draw_tile(t_data *data)
+void	draw_map(t_data *data)
 {
 	t_pt	pt;
 
@@ -33,6 +33,8 @@ void	draw_tile(t_data *data)
 			if (pt.y < data->height - 1)
 				draw_line(pt, pt.x, pt.y + 1, data);
 			pt.x++;
+			data->zoom_in = 0;
+			data->zoom_out = 0;
 		}
 		pt.y++;
 	}
@@ -71,15 +73,18 @@ void	draw_line(t_pt pt, float x1, float y1, t_data *data)
 ** Initiates drawing unit (how much distance would be between x and x1)
 ** drawing unit = (Win_diagonal / 2) / map diagonal
 */
-int	drawing_unit(int s_w, int s_h, int m_w, int m_h)
+float	drawing_unit(int sc, int m_w, int m_h)
 {
 	float	screen_diagonal;
 	float	map_diagonal;
 	float	draw_unit;
 
+	if (sc != 0)
+		return (sc);
 	map_diagonal = m_w * m_w + m_h * m_h;
 	map_diagonal = sqrt(map_diagonal);
-	screen_diagonal = s_w * s_w + s_h * s_h;
+	screen_diagonal = SCREEN_WIDTH * SCREEN_WIDTH
+		+ SCREEN_HEIGHT * SCREEN_HEIGHT;
 	screen_diagonal = sqrt(screen_diagonal);
 	draw_unit = (screen_diagonal / 2) / map_diagonal;
 	return ((int)draw_unit);
@@ -98,21 +103,28 @@ void	iso(float *x, float *y, int z, t_data *data)
 		if (data->width >= 100 && data->width < 500)
 			z /= 3;
 		*x = (*x - *y) * cos(1.0890009);
-		*y = (*x + *y) * sin(1.5) - z;
+		*y = (*x + *y) - z;
 	}
 	return ;
 }
 
 void	scale_map(t_pt *pt, float *x1, float *y1, t_data *data)
 {
-	int	sc;
+	static float	sc;
+	int				i;
 
-	sc = drawing_unit(SCREEN_WIDTH, SCREEN_HEIGHT, data->width, data->height);
-	if (sc > 3 && sc <= 6)
-		sc *= 1.5;
-	if (sc <= 6)
+	sc = (float)drawing_unit(sc, data->width, data->height);
+	i = sc;
+	if (data->zoom_in != 0)
+	{
 		sc *= 2;
-	pt->x *= sc ;
+	}
+	if (data->zoom_out != 0)
+	{
+		sc /= 1.01;
+	}
+	printf("%f\n", sc);
+	pt->x *= sc;
 	pt->y *= sc;
 	*x1 *= sc;
 	*y1 *= sc;

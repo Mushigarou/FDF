@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/12 20:24:13 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/13 02:44:17 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_data
 	int		shift_x;
 	int		shift_y;
 	int		bool;
+	int		zoom_in;
+	int		zoom_out;
 }	t_data;
 
 typedef struct t_points
@@ -58,14 +60,6 @@ typedef struct t_points
 	float	x;
 	float	y;
 }	t_pt;
-// // ** Start point of drawing
-// typedef	struct s_line
-// {
-// 	double	x;
-// 	double	y;
-// 	double	x1;
-// 	double	y1;
-// }	t_line;
 
 // ** Initiates structure
 int		init(t_data *data, char **av);
@@ -81,7 +75,7 @@ int		ft_strtol(char *str);
 // ** draws a line between two points
 void	draw_line(t_pt pt, float x1, float y1, t_data *data);
 // ** Draws lines between the points of the map
-void	draw_tile(t_data *data);
+void	draw_map(t_data *data);
 // ** Checks whether the map is empty or not
 int		map_is_empty(char *s);
 

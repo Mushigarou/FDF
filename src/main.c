@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/12 20:18:16 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/13 04:00:55 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,12 @@ int	deal_key(int key, t_data *data)
 		data->bool = 1;
 	if (key == 34)
 		data->bool = 0;
+	if (key == 78)
+		data->zoom_out += 1;
+	if (key == 69)
+		data->zoom_in += 1;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	draw_tile(data);
+	draw_map(data);
 	return (0);
 }
 
@@ -60,20 +64,24 @@ void	lk(void)
 	system("leaks fdf");
 }
 
+// Minilibx doesn't support event masks
+// 2 is the event of keypress
+// 17 is the event of DestroyNotify
 int	main(int argc, char **argv)
 {
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (argc != 2)
-		return (-1);
+		return (perror("<./bin/fdf> <map_name>\n"), -1);
 	init(data, argv);
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr,
 			SCREEN_WIDTH, SCREEN_HEIGHT, data->file_name);
-	draw_tile(data);
-	printf("%d\n", data->width);
-	mlx_hook(data->win_ptr, 2, 1L << 0, deal_key, data);
+	draw_map(data);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, 10, 0xFFFFFF,
+		"Use direction keys to move the map");
+	mlx_hook(data->win_ptr, 2, 0, deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, mouse, data);
 	lk();
 	mlx_loop(data->mlx_ptr);
