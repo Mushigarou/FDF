@@ -6,20 +6,11 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:38:11 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/12 23:42:53 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/14 03:10:54 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-// ** Initiates the point from where to start drawing
-void	center_map(t_pt *pt, float *x1, float *y1, t_data *data)
-{
-	pt->x += (SCREEN_WIDTH / 2) + data->shift_x;
-	pt->y += (SCREEN_HEIGHT / 8) + data->shift_y;
-	*x1 += (SCREEN_WIDTH / 2) + data->shift_x;
-	*y1 += (SCREEN_HEIGHT / 8) + data->shift_y;
-}
 
 // ** Gets width and height of the given map
 int	get_map_dimensions(t_data *data, int fd, char *s)

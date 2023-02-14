@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/13 20:03:01 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/14 03:21:23 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ int	mouse(t_data *data)
 int	deal_key(int key, t_data *data)
 {
 	if (key == 53)
-	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit(0);
-	}
 	if (key == UP_ARROW)
 		data->shift_y -= 20;
 	if (key == LEFT_ARROW)
@@ -74,8 +71,11 @@ int	deal_key(int key, t_data *data)
 		data->zoom_out += 1;
 	if (key == PLUS_KEY)
 		data->zoom_in += 1;
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->img);
+	data->img = mlx_new_image(data->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->ln, &data->en);
 	draw_map(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
 	return (0);
 }
 
@@ -93,8 +93,11 @@ int	main(int argc, char **argv)
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr,
 			SCREEN_WIDTH, SCREEN_HEIGHT, data->file_name);
+	data->img = mlx_new_image(data->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->ln, &data->en);
 	draw_map(data);
 	put_str(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
 	mlx_hook(data->win_ptr, 2, 0, deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, mouse, data);
 	mlx_loop(data->mlx_ptr);

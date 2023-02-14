@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/13 02:44:17 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/14 03:21:52 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ typedef struct s_data
 	int		bool;
 	int		zoom_in;
 	int		zoom_out;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		ln;
+	int		en;
 }	t_data;
 
 typedef struct t_points
@@ -78,7 +83,11 @@ void	draw_line(t_pt pt, float x1, float y1, t_data *data);
 void	draw_map(t_data *data);
 // ** Checks whether the map is empty or not
 int		map_is_empty(char *s);
-
+// ** Centers the map in the middle
 void	center_map(t_pt *pt, float *x1, float *y1, t_data *data);
+// ** Puts a pixel
+void	my_mlx_put_pixel(t_data *data, int x, int y, int color);
+// ** Checks if a point is within the screen height and width
+int		valid(t_pt pt, float x1, float y1);
 
 #endif // fdf.h
