@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 05:59:28 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/14 03:21:52 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/14 05:10:39 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@
 
 # define IN 1
 # define OUT 0
+
+# define UP_ARROW 126
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
+# define DOWN_ARROW 125
+# define P 35
+# define I 34
+# define PLUS_KEY 69
+# define MINUS_KEY 78
 
 // ** Accessing each tile of the map
 typedef struct s_tile
@@ -60,6 +69,7 @@ typedef struct s_data
 	int		en;
 }	t_data;
 
+// ** x and y coordinates of starting point of drawing
 typedef struct t_points
 {
 	float	x;

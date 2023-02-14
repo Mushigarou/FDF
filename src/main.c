@@ -6,51 +6,20 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:37:39 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/02/14 03:21:23 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/02/14 05:11:12 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Segfault when there is a comma without a color
-// Sigfault when there is color without z
-// Sigfault when there is only a comma (OR ANY OTHER CHARACTER)
-// sigfault NULL* is the first char \\ echo '\0' >> test_maps/10-70.fdf
-
-// Needs to free *data elsewhere
-
-// Make doesn't recognize changes in this file (command make) (Makefile)
-
 #include "fdf.h"
-/*
-**	Calling mlx_init() to initiate a connection with the graphical system
-**	Calling mlx_new_win() to open a window
-**	
-*/
 
-#define UP_ARROW 126
-#define LEFT_ARROW 123
-#define RIGHT_ARROW 124
-#define DOWN_ARROW 125
-#define P 35
-#define I 34
-#define PLUS_KEY 69
-#define MINUS_KEY 78
-
-void	put_str(t_data *data)
-{
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, 10, 0xFFFFFF,
-		"Use direction keys to move the map");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, 30, 0xFFFFFF,
-		"Use + and - sign to zoom in and out");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, 50, 0xFFFFFF,
-		"Use 'p' for parallel projection and 'i' for isometric view");
-}
-
+// **	Exits program after clicking on red cross button
 int	mouse(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	exit(0);
 }
 
+// **	Handles key events, then draws the image again
 int	deal_key(int key, t_data *data)
 {
 	if (key == 53)
@@ -79,9 +48,31 @@ int	deal_key(int key, t_data *data)
 	return (0);
 }
 
-// Minilibx doesn't support event masks
-// 2 is the event of keypress
-// 17 is the event of DestroyNotify
+/*
+**	To link MiniLibX on MACOSX use :
+**		-lmlx -framework OpenGL -framework AppKit
+**	To link MiniLibX on BSD/Linus and X-Window use : 
+**		-lmlx -lXext -lX11 (you may need to use -L)
+	***************************
+**	Calling mlx_init() to initiate a connection 
+**		with the graphical system
+**	Calling mlx_new_win() to open a window
+**	Calling mlx_new_image() to create a new image
+**	Calling mlx_get_data_addr() to get the start 
+**		address of the image data,
+**		and setting values bpp, ln, and endian (en)
+**	Calling mlx_put_image_to_window() to push the image to the window
+**	Calling mlx_hook for generic hook system (all events)
+**	Calling mlx_loop() to initiate the window rendering, 
+**		and handling keyboard or mouse events
+	***************************
+**	Minilibx doesn't support event masks
+**	2 is the event of keypress
+**	17 is the event of DestroyNotify
+**  endian : 0 = sever X is little endian, 1 = big endian
+**  endian : useless on macos, client and graphical 
+**		framework have the same endian
+*/
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -96,7 +87,6 @@ int	main(int argc, char **argv)
 	data->img = mlx_new_image(data->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->ln, &data->en);
 	draw_map(data);
-	put_str(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
 	mlx_hook(data->win_ptr, 2, 0, deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, mouse, data);
