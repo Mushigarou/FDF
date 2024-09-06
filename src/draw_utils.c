@@ -39,19 +39,19 @@ void	my_mlx_put_pixel(t_data *data, int x, int y, int color)
 void	center_map(t_pt *pt, float *x1, float *y1, t_data *data)
 {
 	pt->x += (SCREEN_WIDTH / 2) + data->shift_x;
-	pt->y += (SCREEN_HEIGHT / 8) + data->shift_y;
+	pt->y += (SCREEN_HEIGHT / 2) + data->shift_y;
 	*x1 += (SCREEN_WIDTH / 2) + data->shift_x;
-	*y1 += (SCREEN_HEIGHT / 8) + data->shift_y;
+	*y1 += (SCREEN_HEIGHT / 2) + data->shift_y;
 }
 
 /*
 **	Checks if points A and B are within the 
 **		range of the window width and height
 */
-int	valid(t_pt pt, float x1, float y1)
+int	valid(t_pt pt, float x1, float y1, t_data *data)
 {
-	if ((x1 < 1500 && x1 > 0) && (y1 < 960 && y1 > 0)
-		&& (pt.x < 1500 && pt.x > 0) && (pt.y < 960 && pt.y > 0))
+	if ((x1 < SCREEN_WIDTH && x1 > 0) && (y1 < SCREEN_HEIGHT && y1 > 0)
+		&& (pt.x < SCREEN_WIDTH && pt.x > 0) && (pt.y < SCREEN_HEIGHT && pt.y > 0))
 		return (1);
 	return (0);
 }

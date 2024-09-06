@@ -13,7 +13,7 @@
 #include "fdf.h"
 
 int		drawing_unit(int sc, int m_w, int m_h);
-void	iso(float *x, float *y, int z, t_data *data);
+void	iso(float *x, float *y, int z);
 void	scale_map(t_pt *pt, float *x1, float *y1, t_data *data);
 
 // ** Draws all the tiles of the map
@@ -42,31 +42,32 @@ void	draw_map(t_data *data)
 // ** Draws a line between point A and B
 void	draw_line(t_pt pt, float x1, float y1, t_data *data)
 {
-	float	x_step;
-	float	y_step;
-	int		max ;
-	int		i;
-	int		j;
+    float	x_step;
+    float	y_step;
+    int		max;
+    int		i;
+    int		j;
 
-	i = (int)pt.x;
-	j = (int)pt.y;
-	iso(&pt.x, &pt.y, data->map_matrix[(int)pt.y][(int)pt.x].z, data);
-	iso(&x1, &y1, data->map_matrix[(int)y1][(int)x1].z, data);
-	scale_map(&pt, &x1, &y1, data);
-	center_map(&pt, &x1, &y1, data);
-	x_step = x1 - pt.x;
-	y_step = y1 - pt.y;
-	max = fmax(fabs(x_step), fabs(y_step));
-	x_step /= fmax(fabs(x_step), fabs(y_step));
-	y_step /= fmax(fabs(x_step), fabs(y_step));
-	while (max-- >= 0)
-	{
-		if (valid(pt, x1, y1))
-			my_mlx_put_pixel(data, (int)pt.x,
-				(int)pt.y, data->map_matrix[j][i].color);
-		pt.x += x_step;
-		pt.y += y_step;
-	}
+    i = (int)pt.x;
+    j = (int)pt.y;
+
+    iso(&pt.x, &pt.y, data->map_matrix[(int)pt.y][(int)pt.x].z);
+    iso(&x1, &y1, data->map_matrix[(int)y1][(int)x1].z);
+    scale_map(&pt, &x1, &y1, data);
+    center_map(&pt, &x1, &y1, data);
+    x_step = x1 - pt.x;
+    y_step = y1 - pt.y;
+    max = fmax(fabs(x_step), fabs(y_step));
+    x_step /= max;
+    y_step /= max;
+    while (max-- >= 0)
+    {
+        if (valid(pt, x1, y1))
+            my_mlx_put_pixel(data, (int)pt.x, (int)pt.y, data->map_matrix[j][i].color);
+
+        pt.x += x_step;
+        pt.y += y_step;
+    }
 }
 
 /*
@@ -90,40 +91,31 @@ int	drawing_unit(int sc, int m_w, int m_h)
 	return ((int)draw_unit);
 }
 
-// **	Changes the view of the map from parallel to isometric projection
-void	iso(float *x, float *y, int z, t_data *data)
+// ** Changes the view of the map from parallel to isometric projection
+void	iso(float *x, float *y, int z)
 {
-	float	r;
-
-	r = *x;
-	if (!data->bool)
-	{
-		if (data->width > 11 && data->width <= 20)
-			z /= 6;
-		if (data->width < 10)
-			z /= 3;
-		if (data->width == 21)
-			z /= 12;
-		if (data->width >= 100)
-			z /= 3;
-		*x = (*x - *y) * cos(30 * (M_PI / 180));
-		*y = (r + *y) * sin(90 * (M_PI / 180)) - z;
-	}
-	return ;
+    float temp_x;
+    float temp_y;
+    float z_scale = 0.5;
+    
+    temp_x = *x;
+    temp_y = *y;
+    z *= z_scale;
+    *x = (temp_x - temp_y) * cos(30 * (M_PI / 180));
+    *y = (temp_x + temp_y) * sin(30 * (M_PI / 180)) - z;
 }
-
 // **	Scales the map
 void	scale_map(t_pt *pt, float *x1, float *y1, t_data *data)
 {
-	static float	sc;
+    static float sc;
 
-	sc = (float)drawing_unit(sc, data->width, data->height);
-	if (data->zoom_in != 0)
-		sc += 1;
-	if (data->zoom_out != 0 && sc > 2)
-		sc -= 1;
-	pt->x *= sc;
-	pt->y *= sc;
-	*x1 *= sc;
-	*y1 *= sc;
+    sc = (float)drawing_unit(sc, data->width, data->height);
+    if (data->zoom_in != 0)
+        sc += 1;
+    if (data->zoom_out != 0 && sc > 2)
+        sc -= 1;
+    pt->x *= sc;
+    pt->y *= sc;
+    *x1 *= sc;
+    *y1 *= sc;
 }
