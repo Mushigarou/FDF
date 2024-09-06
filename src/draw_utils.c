@@ -29,10 +29,13 @@
 // **	Calculates the memory addres
 void	my_mlx_put_pixel(t_data *data, int x, int y, int color)
 {
-	char	*dst;
+	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
+	{
+		char	*dst;
 
-	dst = data->addr + (y * data->ln + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+		dst = data->addr + (y * data->ln + x * (data->bpp / 8));
+		*(unsigned int *)dst = color;
+	}
 }
 
 // ** Initiates the point from where to start drawing
@@ -48,7 +51,7 @@ void	center_map(t_pt *pt, float *x1, float *y1, t_data *data)
 **	Checks if points A and B are within the 
 **		range of the window width and height
 */
-int	valid(t_pt pt, float x1, float y1, t_data *data)
+int	valid(t_pt pt, float x1, float y1)
 {
 	if ((x1 < SCREEN_WIDTH && x1 > 0) && (y1 < SCREEN_HEIGHT && y1 > 0)
 		&& (pt.x < SCREEN_WIDTH && pt.x > 0) && (pt.y < SCREEN_HEIGHT && pt.y > 0))
